@@ -1,8 +1,14 @@
 package Model;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 
-public class Transaction implements DataObject {
+public class Transaction implements JSONNetworkObj,JSONSignedObj, JSONHashObj {
+
+    private final static String JSON_INPUTS = "inputs";
+    private final static String JSON_OUTPUTS = "outputs";
 
     private ArrayList<Input> inputs = new ArrayList<Input>();
 
@@ -40,16 +46,67 @@ public class Transaction implements DataObject {
         this.outputs = outputs;
     }
 
-    public String getObjData() {
-        String data = "";
-        for(int i = 0; i < inputs.size(); i++){
+    public JsonObject toJson() {
+        JsonObject txObj = new JsonObject();
+        JsonArray inputArray = new JsonArray();
+        JsonArray outputArray = new JsonArray();
+
+        for(int i = 0; i < inputs.size(); i++) {
             Input input = inputs.get(i);
-            data += input.getObjData();
+            inputArray.add(input.toJson());
         }
+
         for(int i = 0; i < outputs.size(); i++){
             Output output = outputs.get(i);
-            data += output.getObjData();
+            outputArray.add(output.toJson());
         }
-        return data;
+
+        txObj.add(JSON_INPUTS, inputArray);
+        txObj.add(JSON_OUTPUTS, outputArray);
+
+        return txObj;
+    }
+
+
+    public JsonObject toJSONForSigning() {
+        JsonObject txObj = new JsonObject();
+        JsonArray inputArray = new JsonArray();
+        JsonArray outputArray = new JsonArray();
+
+        for(int i = 0; i < inputs.size(); i++) {
+            Input input = inputs.get(i);
+            inputArray.add(input.toJSONForSigning());
+        }
+
+        for(int i = 0; i < outputs.size(); i++){
+            Output output = outputs.get(i);
+            outputArray.add(output.toJSONForSigning());
+        }
+
+        txObj.add(JSON_INPUTS, inputArray);
+        txObj.add(JSON_OUTPUTS, outputArray);
+
+        return txObj;
+    }
+
+    public JsonObject toJSONForHashing() {
+        JsonObject txObj = new JsonObject();
+        JsonArray inputArray = new JsonArray();
+        JsonArray outputArray = new JsonArray();
+
+        for(int i = 0; i < inputs.size(); i++) {
+            Input input = inputs.get(i);
+            inputArray.add(input.toJSONForHashing());
+        }
+
+        for(int i = 0; i < outputs.size(); i++){
+            Output output = outputs.get(i);
+            outputArray.add(output.toJSONForHashing());
+        }
+
+        txObj.add(JSON_INPUTS, inputArray);
+        txObj.add(JSON_OUTPUTS, outputArray);
+
+        return txObj;
     }
 }

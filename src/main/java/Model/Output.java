@@ -1,6 +1,12 @@
 package Model;
 
-public class Output implements DataObject {
+import Utils.Base58;
+import com.google.gson.JsonObject;
+
+public class Output implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
+
+    private final static String JSON_AMOUNT = "amount";
+    private final static String JSON_PUB_KEY_HASH = "pubKeyHash";
 
     private long amount;
 
@@ -27,8 +33,18 @@ public class Output implements DataObject {
         this.pubKeyHash = pubKeyHash;
     }
 
-    public String getObjData(){
-        return amount + pubKeyHash.toString();
+    public JsonObject toJson() {
+        JsonObject outputObj = new JsonObject();
+        outputObj.addProperty(JSON_AMOUNT, amount);
+        outputObj.addProperty(JSON_PUB_KEY_HASH, Base58.encode(pubKeyHash));
+        return outputObj;
     }
 
+    public JsonObject toJSONForSigning() {
+        return toJson();
+    }
+
+    public JsonObject toJSONForHashing() {
+        return toJson();
+    }
 }

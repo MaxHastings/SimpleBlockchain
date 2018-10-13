@@ -1,6 +1,11 @@
 package Model;
 
-public class Outpoint {
+import com.google.gson.JsonObject;
+
+public class Outpoint implements JSONNetworkObj, JSONSignedObj, JSONHashObj{
+
+    private final static String JSON_PREV_TX_HASH= "prevTxHash";
+    private final static String JSON_INDEX = "index";
 
     private String prevTxHash;
 
@@ -29,5 +34,20 @@ public class Outpoint {
 
     public String toString(){
         return prevTxHash + index;
+    }
+
+    public JsonObject toJson() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(JSON_PREV_TX_HASH, prevTxHash);
+        jsonObject.addProperty(JSON_INDEX, index);
+        return jsonObject;
+    }
+
+    public JsonObject toJSONForSigning() {
+        return toJson();
+    }
+
+    public JsonObject toJSONForHashing() {
+        return toJson();
     }
 }
