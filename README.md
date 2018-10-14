@@ -8,4 +8,4 @@ The biggest difference is our goal being about learning. We don't plan to make a
 
 # How can I contribute to the project?
 
-All levels of experience are allowed to make contributions. I currently use IntelliJ Community edition when working on this project. Which you can download here. https://www.jetbrains.com/idea/download/#section=windows Then use the IDE to import this GitHub repo. After you make a contribution to the code base then submit a pull request.
+All levels of experience are allowed to make contributions. I currently use IntelliJ Community edition when working on this project. Which you can download here. https://www.jetbrains.com/idea/download Then use the IDE to import this GitHub repo. Submit a pull request after committing new changes to the codebase.
