@@ -1,12 +1,11 @@
 package Model;
 
-import Crypto.Sha256;
+import Crypto.Digest;
 import Utils.Base58;
 import Utils.Hex;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
@@ -100,7 +99,7 @@ public class Block implements JSONNetworkObj, JSONHashObj {
     }
 
     public byte[] getRawHash() throws Exception{
-        return Sha256.hashData(toJSONForHashing().toString().getBytes());
+        return Digest.sha256Hash(toJSONForHashing().toString().getBytes());
     }
 
     public BigInteger getBigIntegerHash() throws Exception{

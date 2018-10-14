@@ -1,6 +1,5 @@
 package Model;
 
-import Crypto.Sha256;
 import Utils.BigMath;
 import Utils.Hex;
 import org.junit.Test;
@@ -40,7 +39,8 @@ public class BlockTest {
         BigInteger smallestInt = BigMath.pow(BigInteger.valueOf(2), BigInteger.valueOf(256));
         byte[] smallsha256 = new byte[]{0};
 
-        for(int i = 0; i < 2500000; i++) {
+        long endTime = System.currentTimeMillis() + 60 * 1000 * 1;
+        for(int i = 0; System.currentTimeMillis() < endTime; i++) {
 
             block.setNonce(i);
             BigInteger bigInteger = block.getBigIntegerHash();

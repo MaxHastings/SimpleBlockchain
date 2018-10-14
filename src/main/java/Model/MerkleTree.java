@@ -1,7 +1,7 @@
 package Model;
 
+import Crypto.Digest;
 import Crypto.Hash;
-import Crypto.Sha256;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class MerkleTree {
         }
 
         for(int i = 0; i < transactions.size(); i++){
-            byte[] sha256Hash = Sha256.hashData(transactions.get(i).toJSONForSigning().toString().getBytes());
+            byte[] sha256Hash = Digest.sha256Hash(transactions.get(i).toJSONForSigning().toString().getBytes());
             hashChain.add(new Hash(sha256Hash));
         }
 
@@ -46,7 +46,7 @@ public class MerkleTree {
             System.arraycopy(hash1, 0, c, 0, hash1.length);
             System.arraycopy(hash2, 0, c, hash1.length, hash2.length);
 
-            byte[] sha256Hash = Sha256.hashData(c);
+            byte[] sha256Hash = Digest.sha256Hash(c);
             Hash hash = new Hash(sha256Hash);
 
             nextHashChain.add(hash);

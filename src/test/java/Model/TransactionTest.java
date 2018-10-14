@@ -1,8 +1,8 @@
 package Model;
 
+import Crypto.Digest;
 import Crypto.ECSigner;
 import Crypto.KeyCreator;
-import Crypto.Sha256;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class TransactionTest {
     public static Transaction createTestTransaction() throws Exception{
         KeyPair keyPair = KeyCreator.generateKeyPair();
         ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
-        byte[] pubKeyHash = Sha256.hashData(publicKey.getEncoded());
+        byte[] pubKeyHash = Digest.sha256Hash(publicKey.getEncoded());
 
         Output output = new Output(100, pubKeyHash);
         Input input = new Input(new Outpoint("1234", 3));
@@ -53,7 +53,7 @@ public class TransactionTest {
     {
         KeyPair keyPair = KeyCreator.generateKeyPair();
         ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
-        byte[] pubKeyHash = Sha256.hashData(publicKey.getEncoded());
+        byte[] pubKeyHash = Digest.sha256Hash(publicKey.getEncoded());
 
         Output output = new Output(100, pubKeyHash);
         Input input = new Input(new Outpoint("1234", 3));
@@ -70,7 +70,7 @@ public class TransactionTest {
 
         output.setPubKeyHash(pubKeyHash);
 
-        Assert.assertArrayEquals(output.getPubKeyHash(), Sha256.hashData(input.getPublicKeyEncoded()));
+        Assert.assertArrayEquals(output.getPubKeyHash(), Digest.sha256Hash(input.getPublicKeyEncoded()));
 
         ECPublicKey publicKeyFromInput = KeyCreator.createPublicKey(input.getPublicKeyEncoded());
         boolean verifySig = ECSigner.verifyData(publicKeyFromInput, data, input.getSignature());
@@ -82,7 +82,7 @@ public class TransactionTest {
     {
         KeyPair keyPair = KeyCreator.generateKeyPair();
         ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
-        byte[] pubKeyHash = Sha256.hashData(publicKey.getEncoded());
+        byte[] pubKeyHash = Digest.sha256Hash(publicKey.getEncoded());
 
         Output output = new Output(100, pubKeyHash);
         Input input = new Input(new Outpoint("1234", 3));
@@ -99,7 +99,7 @@ public class TransactionTest {
 
         output.setPubKeyHash(pubKeyHash);
 
-        Assert.assertArrayEquals(output.getPubKeyHash(), Sha256.hashData(input.getPublicKeyEncoded()));
+        Assert.assertArrayEquals(output.getPubKeyHash(), Digest.sha256Hash(input.getPublicKeyEncoded()));
 
         output.setAmount(0);
         data = transaction.toJSONForSigning().toString().getBytes();

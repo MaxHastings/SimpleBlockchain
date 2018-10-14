@@ -9,7 +9,7 @@ public class Hash {
     }
 
     public byte[] hashData() throws Exception{
-        return Sha256.hashData(data);
+        return Digest.sha256Hash(data);
     }
 
 }

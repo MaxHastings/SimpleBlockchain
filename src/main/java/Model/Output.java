@@ -10,7 +10,7 @@ public class Output implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
 
     private long amount;
 
-    private byte[] pubKeyHash; //Crypto.Sha256 Hash of publicKey;
+    private byte[] pubKeyHash; //Crypto.Digest Hash of publicKey;
 
     public Output(long amount, byte[] pubKeyHash) {
         this.amount = amount;
