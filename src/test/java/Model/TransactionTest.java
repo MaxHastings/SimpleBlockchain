@@ -23,8 +23,7 @@ public class TransactionTest {
         transaction.addInput(input);
         transaction.addOutput(output);
 
-        byte[] data = transaction.toJSONForSigning().toString().getBytes();
-        Signature signature = ECSigner.signData(keyPair.getPrivate(), data);
+        Signature signature = ECSigner.signData(keyPair.getPrivate(), transaction);
 
         input.setSignature(signature);
 
@@ -58,14 +57,13 @@ public class TransactionTest {
         transaction.addInput(input);
         transaction.addOutput(output);
 
-        byte[] data = transaction.toJSONForSigning().toString().getBytes();
-        Signature signature = ECSigner.signData(keyPair.getPrivate(), data);
+        Signature signature = ECSigner.signData(keyPair.getPrivate(), transaction);
 
         input.setSignature(signature);
 
         Assert.assertEquals(output.getAddress().getAddress(), Address.createAddressFromPublicKey(input.getPublicKey()).getAddress());
 
-        boolean verifySig = ECSigner.verifyData(input.getPublicKey(), data, input.getSignature());
+        boolean verifySig = ECSigner.verifyData(input.getPublicKey(), transaction, input.getSignature());
 
         Assert.assertTrue(verifySig);
     }
@@ -83,17 +81,15 @@ public class TransactionTest {
         transaction.addInput(input);
         transaction.addOutput(output);
 
-        byte[] data = transaction.toJSONForSigning().toString().getBytes();
-        Signature signature = ECSigner.signData(keyPair.getPrivate(), data);
+        Signature signature = ECSigner.signData(keyPair.getPrivate(), transaction);
 
         input.setSignature(signature);
 
         Assert.assertEquals(output.getAddress().getAddress(), Address.createAddressFromPublicKey(input.getPublicKey()).getAddress());
 
         output.setAmount(new Amount(0));
-        data = transaction.toJSONForSigning().toString().getBytes();
 
-        boolean verifySig = ECSigner.verifyData(input.getPublicKey(), data, input.getSignature());
+        boolean verifySig = ECSigner.verifyData(input.getPublicKey(), transaction, input.getSignature());
         Assert.assertFalse(verifySig);
     }
 }

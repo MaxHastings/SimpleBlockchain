@@ -10,6 +10,18 @@ import java.security.interfaces.ECPublicKey;
 public class PublicKeyTest {
 
     @Test
+    public void testCreatePublicKeyFromEncoded() throws Exception {
+        KeyPair keyPair = KeyCreator.generateKeyPair();
+
+        ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
+
+        byte[] pubEncoded = publicKey.getEncoded();
+        ECPublicKey publicKeyCreated = KeyCreator.createPublicKey(pubEncoded);
+
+        Assert.assertArrayEquals(pubEncoded, publicKeyCreated.getEncoded());
+    }
+
+    @Test
     public void createPublicKeyFromRaw() throws Exception {
 
         KeyPair keyPair = KeyCreator.generateKeyPair();
