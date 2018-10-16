@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Chain {
+public class Chain { //TODO: Implement LevelDB to handle chain
 
     private ArrayList<Block> blocks = new ArrayList<Block>();
 
@@ -13,18 +13,18 @@ public class Chain {
 
     }
 
-    public void addBlock(Block block){
+    public void addBlock(Block block) {
         blocks.add(block);
     }
 
-    public Block getBlock(int index){
+    public Block getBlock(int index) {
         return blocks.get(index);
     }
 
-    public Block getBlock(String blockHash){
-        for(int i = 0; i < blocks.size(); i++){
+    public Block getBlock(String blockHash) {
+        for (int i = 0; i < blocks.size(); i++) {
             Block block = blocks.get(i);
-            if(block.getBlockHash().equals(blockHash)){
+            if (block.getBlockHash().equals(blockHash)) {
                 return block;
             }
         }

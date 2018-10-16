@@ -10,9 +10,9 @@ import java.security.interfaces.ECPublicKey;
 public class KeyPairTest {
 
     @Test
-    public void generateKeyPairs() throws Exception{
+    public void generateKeyPairs() throws Exception {
 
-        for(int i = 0; i < 100; i++){
+        for (int i = 0; i < 100; i++) {
             KeyPair keyPair = KeyCreator.generateKeyPair();
             ECPrivateKey privateKey = (ECPrivateKey) keyPair.getPrivate();
             ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();

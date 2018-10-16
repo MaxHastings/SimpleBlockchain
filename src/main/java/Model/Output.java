@@ -1,6 +1,5 @@
 package Model;
 
-import Utils.Base58;
 import com.google.gson.JsonObject;
 
 public class Output implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
@@ -8,35 +7,35 @@ public class Output implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
     private final static String JSON_AMOUNT = "amount";
     private final static String JSON_PUB_KEY_HASH = "pubKeyHash";
 
-    private long amount;
+    private Amount amount;
 
-    private byte[] pubKeyHash; //Crypto.Digest Hash of publicKey;
+    private Address address; //Crypto.Digest Hash of publicKey;
 
-    public Output(long amount, byte[] pubKeyHash) {
+    public Output(Amount amount, Address address) {
         this.amount = amount;
-        this.pubKeyHash = pubKeyHash;
+        this.address = address;
     }
 
-    public long getAmount() {
+    public Amount getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(Amount amount) {
         this.amount = amount;
     }
 
-    public byte[] getPubKeyHash() {
-        return pubKeyHash;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setPubKeyHash(byte[] pubKeyHash) {
-        this.pubKeyHash = pubKeyHash;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public JsonObject toJson() {
         JsonObject outputObj = new JsonObject();
-        outputObj.addProperty(JSON_AMOUNT, amount);
-        outputObj.addProperty(JSON_PUB_KEY_HASH, Base58.encode(pubKeyHash));
+        outputObj.addProperty(JSON_AMOUNT, amount.getSize());
+        outputObj.addProperty(JSON_PUB_KEY_HASH, address.getAddress());
         return outputObj;
     }
 

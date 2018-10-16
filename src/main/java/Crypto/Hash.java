@@ -8,7 +8,7 @@ public class Hash {
         this.data = data;
     }
 
-    public byte[] hashData() throws Exception{
+    public byte[] hashData() throws Exception {
         return Digest.sha256Hash(data);
     }
 

@@ -10,7 +10,7 @@ import java.security.interfaces.ECPublicKey;
 public class PublicKeyTest {
 
     @Test
-    public void createPublicKeyFromRaw() throws Exception{
+    public void createPublicKeyFromRaw() throws Exception {
 
         KeyPair keyPair = KeyCreator.generateKeyPair();
         ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
@@ -23,7 +23,7 @@ public class PublicKeyTest {
     }
 
     @Test
-    public void createCoinAddress() throws Exception{
+    public void createCoinAddress() throws Exception {
         KeyPair keyPair = KeyCreator.generateKeyPair();
         ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
 

@@ -7,7 +7,7 @@ import java.security.Signature;
 public class ECSigner {
 
 
-    public static byte[] signData(PrivateKey privateKey, byte[] data) throws Exception{
+    public static Crypto.Signature signData(PrivateKey privateKey, byte[] data) throws Exception {
         Signature dsa = Signature.getInstance("SHA256withECDSA");
 
         dsa.initSign(privateKey);
@@ -20,13 +20,13 @@ public class ECSigner {
 
         byte[] realSig = dsa.sign();
 
-        return realSig;
+        return new Crypto.Signature(realSig);
     }
 
-    public static boolean verifyData(PublicKey publicKey, byte[] data, byte[] signature) throws Exception{
+    public static boolean verifyData(PublicKey publicKey, byte[] data, Crypto.Signature signature) throws Exception {
         Signature dsa = Signature.getInstance("SHA256withECDSA");
         dsa.initVerify(publicKey);
         dsa.update(data);
-        return dsa.verify(signature);
+        return dsa.verify(signature.getRaw());
     }
 }

@@ -13,15 +13,15 @@ public class MerkleTree {
         this.transactions = transactions;
     }
 
-    public byte[] generateMerkleRootHash() throws Exception{
+    public byte[] generateMerkleRootHash() throws Exception {
 
         ArrayList<Hash> hashChain = new ArrayList<Hash>();
 
-        if(transactions.size() % 2 != 0){ //Odd number of transactions so we add the last one twice.
+        if (transactions.size() % 2 != 0) { //Odd number of transactions so we add the last one twice.
             transactions.add(transactions.get(transactions.size() - 1));
         }
 
-        for(int i = 0; i < transactions.size(); i++){
+        for (int i = 0; i < transactions.size(); i++) {
             byte[] sha256Hash = Digest.sha256Hash(transactions.get(i).toJSONForSigning().toString().getBytes());
             hashChain.add(new Hash(sha256Hash));
         }
@@ -29,15 +29,15 @@ public class MerkleTree {
         return hashTheChain(hashChain);
     }
 
-    private byte[] hashTheChain(ArrayList<Hash> hashChain) throws Exception{
+    private byte[] hashTheChain(ArrayList<Hash> hashChain) throws Exception {
 
-        if(hashChain.size() == 1){
+        if (hashChain.size() == 1) {
             return hashChain.get(0).hashData(); //Break out of recursion when we have only one hash remaining. This is our merkle root.
         }
 
         ArrayList<Hash> nextHashChain = new ArrayList<Hash>();
 
-        for(int i = 0; i < hashChain.size(); i =+ 2){
+        for (int i = 0; i < hashChain.size(); i = +2) {
 
             byte[] hash1 = hashChain.get(i).hashData();
             byte[] hash2 = hashChain.get(i + 1).hashData();

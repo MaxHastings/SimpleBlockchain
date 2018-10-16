@@ -50,7 +50,7 @@ public class Block implements JSONNetworkObj, JSONHashObj {
         this.nonce = nonce;
     }
 
-    public void addTransaction(Transaction transaction){
+    public void addTransaction(Transaction transaction) {
         transactions.add(transaction);
     }
 
@@ -78,7 +78,7 @@ public class Block implements JSONNetworkObj, JSONHashObj {
         blockObj.addProperty(JSON_MERKLE_ROOT, hashMerkleRoot);
 
         JsonArray txArray = new JsonArray();
-        for(int i = 0; i < transactions.size(); i++){
+        for (int i = 0; i < transactions.size(); i++) {
             txArray.add(transactions.get(i).toJson());
         }
 
@@ -91,22 +91,21 @@ public class Block implements JSONNetworkObj, JSONHashObj {
         hashMerkleRoot = Base58.encode(new MerkleTree(transactions).generateMerkleRootHash());
 
         JsonObject blockObj = new JsonObject();
-        blockObj.addProperty(JSON_BLOCK_HASH, blockHash);
         blockObj.addProperty(JSON_PREV_BLOCK_HASH, prevBlockHash);
         blockObj.addProperty(JSON_NONCE, nonce);
         blockObj.addProperty(JSON_MERKLE_ROOT, hashMerkleRoot);
         return blockObj;
     }
 
-    public byte[] getRawHash() throws Exception{
+    public byte[] getRawHash() throws Exception {
         return Digest.sha256Hash(toJSONForHashing().toString().getBytes());
     }
 
-    public BigInteger getBigIntegerHash() throws Exception{
+    public BigInteger getBigIntegerHash() throws Exception {
         return new BigInteger(1, getRawHash());
     }
 
-    public String getHexHash() throws Exception{
+    public String getHexHash() throws Exception {
         return Hex.bytesToHex(getRawHash());
     }
 }

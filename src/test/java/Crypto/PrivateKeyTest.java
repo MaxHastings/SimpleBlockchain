@@ -9,7 +9,7 @@ import java.security.interfaces.ECPrivateKey;
 public class PrivateKeyTest {
 
     @Test
-    public void createPrivateKeyFromRaw() throws Exception{
+    public void createPrivateKeyFromRaw() throws Exception {
 
         KeyPair keyPair = KeyCreator.generateKeyPair();
         ECPrivateKey privateKey = (ECPrivateKey) keyPair.getPrivate();

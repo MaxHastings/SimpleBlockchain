@@ -8,7 +8,7 @@ public class Hex {
 
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
-        for ( int j = 0; j < bytes.length; j++ ) {
+        for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
@@ -17,14 +17,12 @@ public class Hex {
     }
 
     @NotNull
-    public static byte[] hexToBytes(@NotNull String hex)
-    {
+    public static byte[] hexToBytes(@NotNull String hex) {
         return hexToBytes(hex.toCharArray());
     }
 
     @NotNull
-    public static byte[] hexToBytes(@NotNull char[] hex)
-    {
+    public static byte[] hexToBytes(@NotNull char[] hex) {
         if (hex.length % 2 != 0)
             throw new IllegalArgumentException("Must pass an even number of characters.");
 
@@ -37,8 +35,7 @@ public class Hex {
         return raw;
     }
 
-    public static byte getHexCharValue(char c)
-    {
+    public static byte getHexCharValue(char c) {
         if (c >= '0' && c <= '9')
             return (byte) (c - '0');
         if (c >= 'A' && c <= 'F')

@@ -1,7 +1,10 @@
 package Model;
 
+import Crypto.Signature;
 import Utils.Base58;
 import com.google.gson.JsonObject;
+
+import java.security.interfaces.ECPublicKey;
 
 public class Input implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
 
@@ -11,12 +14,13 @@ public class Input implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
 
     private Outpoint outpoint;
 
-    private byte[] signature;
+    private Signature signature;
 
-    private byte[] publicKeyEncoded;
+    private ECPublicKey publicKey;
 
-    public Input(Outpoint outpoint) {
+    public Input(Outpoint outpoint, ECPublicKey publicKey) {
         this.outpoint = outpoint;
+        this.publicKey = publicKey;
     }
 
     public Outpoint getOutpoint() {
@@ -27,27 +31,27 @@ public class Input implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
         this.outpoint = outpoint;
     }
 
-    public byte[] getSignature() {
+    public Signature getSignature() {
         return signature;
     }
 
-    public void setSignature(byte[] signature) {
+    public void setSignature(Signature signature) {
         this.signature = signature;
     }
 
-    public byte[] getPublicKeyEncoded() {
-        return publicKeyEncoded;
+    public ECPublicKey getPublicKey() {
+        return publicKey;
     }
 
-    public void setPublicKeyEncoded(byte[] publicKeyEncoded) {
-        this.publicKeyEncoded = publicKeyEncoded;
+    public void setPublicKey(ECPublicKey publicKey) {
+        this.publicKey = publicKey;
     }
 
     public JsonObject toJson() {
         JsonObject inputObj = new JsonObject();
         inputObj.add(JSON_OUTPOINT, outpoint.toJson());
-        inputObj.addProperty(JSON_SIGNATURE, Base58.encode(signature));
-        inputObj.addProperty(JSON_PUBLIC_KEY_ENC, Base58.encode(publicKeyEncoded));
+        inputObj.addProperty(JSON_SIGNATURE, Base58.encode(signature.getRaw()));
+        inputObj.addProperty(JSON_PUBLIC_KEY_ENC, Base58.encode(publicKey.getEncoded()));
 
         return inputObj;
     }
@@ -62,8 +66,8 @@ public class Input implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
     public JsonObject toJSONForHashing() {
         JsonObject inputObj = new JsonObject();
         inputObj.add(JSON_OUTPOINT, outpoint.toJSONForHashing());
-        inputObj.addProperty(JSON_SIGNATURE, Base58.encode(signature));
-        inputObj.addProperty(JSON_PUBLIC_KEY_ENC, Base58.encode(publicKeyEncoded));
+        inputObj.addProperty(JSON_SIGNATURE, Base58.encode(signature.getRaw()));
+        inputObj.addProperty(JSON_PUBLIC_KEY_ENC, Base58.encode(publicKey.getEncoded()));
 
         return inputObj;
     }

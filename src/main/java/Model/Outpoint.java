@@ -2,9 +2,9 @@ package Model;
 
 import com.google.gson.JsonObject;
 
-public class Outpoint implements JSONNetworkObj, JSONSignedObj, JSONHashObj{
+public class Outpoint implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
 
-    private final static String JSON_PREV_TX_HASH= "prevTxHash";
+    private final static String JSON_PREV_TX_HASH = "prevTxHash";
     private final static String JSON_INDEX = "index";
 
     private String prevTxHash;
@@ -32,7 +32,7 @@ public class Outpoint implements JSONNetworkObj, JSONSignedObj, JSONHashObj{
         this.index = index;
     }
 
-    public String toString(){
+    public String toString() {
         return prevTxHash + index;
     }
 

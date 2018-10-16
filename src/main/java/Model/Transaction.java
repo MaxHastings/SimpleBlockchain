@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
-public class Transaction implements JSONNetworkObj,JSONSignedObj, JSONHashObj {
+public class Transaction implements JSONNetworkObj, JSONSignedObj, JSONHashObj {
 
     private final static String JSON_INPUTS = "inputs";
     private final static String JSON_OUTPUTS = "outputs";
@@ -14,19 +14,19 @@ public class Transaction implements JSONNetworkObj,JSONSignedObj, JSONHashObj {
 
     private ArrayList<Output> outputs = new ArrayList<Output>();
 
-    public Input getInput(int index){
+    public Input getInput(int index) {
         return inputs.get(index);
     }
 
-    public Output getOutput(int index){
+    public Output getOutput(int index) {
         return outputs.get(index);
     }
 
-    public void addInput(Input input){
+    public void addInput(Input input) {
         inputs.add(input);
     }
 
-    public void addOutput(Output output){
+    public void addOutput(Output output) {
         outputs.add(output);
     }
 
@@ -51,12 +51,12 @@ public class Transaction implements JSONNetworkObj,JSONSignedObj, JSONHashObj {
         JsonArray inputArray = new JsonArray();
         JsonArray outputArray = new JsonArray();
 
-        for(int i = 0; i < inputs.size(); i++) {
+        for (int i = 0; i < inputs.size(); i++) {
             Input input = inputs.get(i);
             inputArray.add(input.toJson());
         }
 
-        for(int i = 0; i < outputs.size(); i++){
+        for (int i = 0; i < outputs.size(); i++) {
             Output output = outputs.get(i);
             outputArray.add(output.toJson());
         }
@@ -73,12 +73,12 @@ public class Transaction implements JSONNetworkObj,JSONSignedObj, JSONHashObj {
         JsonArray inputArray = new JsonArray();
         JsonArray outputArray = new JsonArray();
 
-        for(int i = 0; i < inputs.size(); i++) {
+        for (int i = 0; i < inputs.size(); i++) {
             Input input = inputs.get(i);
             inputArray.add(input.toJSONForSigning());
         }
 
-        for(int i = 0; i < outputs.size(); i++){
+        for (int i = 0; i < outputs.size(); i++) {
             Output output = outputs.get(i);
             outputArray.add(output.toJSONForSigning());
         }
@@ -94,12 +94,12 @@ public class Transaction implements JSONNetworkObj,JSONSignedObj, JSONHashObj {
         JsonArray inputArray = new JsonArray();
         JsonArray outputArray = new JsonArray();
 
-        for(int i = 0; i < inputs.size(); i++) {
+        for (int i = 0; i < inputs.size(); i++) {
             Input input = inputs.get(i);
             inputArray.add(input.toJSONForHashing());
         }
 
-        for(int i = 0; i < outputs.size(); i++){
+        for (int i = 0; i < outputs.size(); i++) {
             Output output = outputs.get(i);
             outputArray.add(output.toJSONForHashing());
         }

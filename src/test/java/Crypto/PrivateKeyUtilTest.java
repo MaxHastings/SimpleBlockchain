@@ -9,9 +9,9 @@ import java.security.interfaces.ECPrivateKey;
 public class PrivateKeyUtilTest {
 
     @Test
-    public void testBase58Encoder() throws Exception{
+    public void testBase58Encoder() throws Exception {
 
-        for(int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
 
             KeyPair keyPair = KeyCreator.generateKeyPair();
 
@@ -27,7 +27,7 @@ public class PrivateKeyUtilTest {
     }
 
     @Test
-    public void showBase58PrivateKey() throws Exception{
+    public void showBase58PrivateKey() throws Exception {
         KeyPair keyPair = KeyCreator.generateKeyPair();
 
         ECPrivateKey originalKey = (ECPrivateKey) keyPair.getPrivate();
