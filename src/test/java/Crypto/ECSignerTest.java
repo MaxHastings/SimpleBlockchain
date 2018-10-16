@@ -12,14 +12,16 @@ public class ECSignerTest {
     @Test
     public void testKeySigningAndVerifying() throws Exception
     {
-        String str = "This is string to sign";
-        byte[] strByte = str.getBytes("UTF-8");
+        for(int i = 0; i < 100; i++) {
+            String str = "This is string to sign";
+            byte[] strByte = str.getBytes("UTF-8");
 
-        KeyPair keyPair = KeyCreator.generateKeyPair();
-        byte[] signature = ECSigner.signData(keyPair.getPrivate(), strByte);
-        boolean verifies = ECSigner.verifyData(keyPair.getPublic(), strByte, signature);
+            KeyPair keyPair = KeyCreator.generateKeyPair();
+            byte[] signature = ECSigner.signData(keyPair.getPrivate(), strByte);
+            boolean verifies = ECSigner.verifyData(keyPair.getPublic(), strByte, signature);
 
-        Assert.assertTrue(verifies);
+            Assert.assertTrue(verifies);
+        }
     }
 
     @Test
