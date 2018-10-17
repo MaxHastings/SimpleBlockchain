@@ -1,10 +1,6 @@
 package Model;
 
-import Utils.BigMath;
-import Utils.Hex;
 import org.junit.Test;
-
-import java.math.BigInteger;
 
 public class BlockTest {
 
@@ -30,29 +26,6 @@ public class BlockTest {
 
         System.out.println("Block Hash as Big Integer: " + block.getBigIntegerHash());
         System.out.println("Block Hash in HEX: " + block.getHexHash());
-    }
-
-    @Test
-    public void testFindingSmallestHash() throws Exception {
-        Block block = createTestBlock();
-
-        BigInteger smallestInt = BigMath.pow(BigInteger.valueOf(2), BigInteger.valueOf(256));
-        byte[] smallsha256 = new byte[]{0};
-
-        long endTime = System.currentTimeMillis() + 60 * 1000 * 1;
-        for (int i = 0; System.currentTimeMillis() < endTime; i++) {
-
-            block.setNonce(i);
-            BigInteger bigInteger = block.getBigIntegerHash();
-
-            if (bigInteger.compareTo(smallestInt) < 0) {
-                smallestInt = bigInteger;
-                smallsha256 = block.getRawHash();
-            }
-        }
-
-        System.out.println("Smallest Block Hash as Big Integer: " + smallestInt);
-        System.out.println("Smallest Block Hash in HEX: " + Hex.bytesToHex(smallsha256));
     }
 
 }

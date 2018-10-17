@@ -69,7 +69,7 @@ public class TransactionTest {
     }
 
     @Test
-    public void tryToManipulateData() throws Exception {
+    public void tryToManipulateAmount() throws Exception {
         KeyPair keyPair = KeyCreator.generateKeyPair();
         ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
         Address address = Address.createAddressFromPublicKey(publicKey);
@@ -88,6 +88,31 @@ public class TransactionTest {
         Assert.assertEquals(output.getAddress().getAddress(), Address.createAddressFromPublicKey(input.getPublicKey()).getAddress());
 
         output.setAmount(new Amount(0));
+
+        boolean verifySig = ECSigner.verifyData(input.getPublicKey(), transaction, input.getSignature());
+        Assert.assertFalse(verifySig);
+    }
+
+    @Test
+    public void tryToManipulateAddress() throws Exception {
+        KeyPair keyPair = KeyCreator.generateKeyPair();
+        ECPublicKey publicKey = (ECPublicKey) keyPair.getPublic();
+        Address address = Address.createAddressFromPublicKey(publicKey);
+
+        Output output = new Output(new Amount(100), address);
+        Input input = new Input(new Outpoint("1234", 3), publicKey);
+
+        Transaction transaction = new Transaction();
+        transaction.addInput(input);
+        transaction.addOutput(output);
+
+        Signature signature = ECSigner.signData(keyPair.getPrivate(), transaction);
+
+        input.setSignature(signature);
+
+        Assert.assertEquals(output.getAddress().getAddress(), Address.createAddressFromPublicKey(input.getPublicKey()).getAddress());
+
+        output.setAddress(Address.createAddressFromPublicKey((ECPublicKey) KeyCreator.generateKeyPair().getPublic()));
 
         boolean verifySig = ECSigner.verifyData(input.getPublicKey(), transaction, input.getSignature());
         Assert.assertFalse(verifySig);
