@@ -1,9 +1,11 @@
 package Model;
 
+import Crypto.BlockHasher;
+import Crypto.Digest;
 import Utils.BigMath;
 
 import java.math.BigInteger;
-import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Miner {
 
@@ -19,23 +21,44 @@ public class Miner {
         this.block = block;
     }
 
-    public void findSmallestHash(int threadCount) throws Exception{
+    public BigInteger getSmallestInt() {
+        return smallestInt;
+    }
+
+    public void setSmallestInt(BigInteger smallestInt) {
+        this.smallestInt = smallestInt;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
+    }
+
+    public int getBestNonce() {
+        return bestNonce;
+    }
+
+    public void setBestNonce(int bestNonce) {
+        this.bestNonce = bestNonce;
+    }
+
+    public boolean isDoStop() {
+        return doStop;
+    }
+
+    public void setDoStop(boolean doStop) {
+        this.doStop = doStop;
+    }
+
+    public void findSmallestHash(int threadCount){
 
         for(int i = 0; i < threadCount; i++){
             new MiningThread().start();
         }
 
-        Scanner reader = new Scanner(System.in);
-        System.out.println("Enter user input to stop mining: ");
-        reader.next();
-        reader.close();
-
-        doStop = true;
-
-        System.out.println("Smallest Block Hash as Big Integer: " + smallestInt);
-
-        block.setNonce(bestNonce);
-        System.out.println("Smallest Block Hash in HEX: " + block.getHexHash());
     }
 
     private class MiningThread extends Thread {
@@ -43,17 +66,27 @@ public class Miner {
         public void run() {
             while (!doStop) {
                 try {
-                    block.setNonce(block.getNonce() + 1);
-                    BigInteger bigInteger = block.getBigIntegerHash();
+                    String jsonBlock = grabNextJSONBlock();
 
-                    if (bigInteger.compareTo(smallestInt) < 0) {
-                        smallestInt = bigInteger;
-                        bestNonce = block.getNonce();
-                    }
+                    BigInteger bigIntegerBlockHash = BlockHasher.getBigIntegerHash(Digest.sha256Hash(jsonBlock.getBytes()));
+
+                    compareHashes(bigIntegerBlockHash);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private synchronized void compareHashes(BigInteger bigInteger){
+            if (bigInteger.compareTo(smallestInt) < 0) {
+                smallestInt = bigInteger;
+                bestNonce = block.getNonce();
+            }
+        }
+
+        private synchronized String grabNextJSONBlock() throws Exception{
+            block.setNonce(block.getNonce() + 1);
+            return block.toJSONForHashing().toString();
         }
     }
 

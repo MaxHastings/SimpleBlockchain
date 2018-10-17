@@ -1,5 +1,6 @@
 package Model;
 
+import Crypto.BlockHasher;
 import org.junit.Test;
 
 public class BlockTest {
@@ -24,8 +25,8 @@ public class BlockTest {
     public void hashTestBlock() throws Exception {
         Block block = createTestBlock();
 
-        System.out.println("Block Hash as Big Integer: " + block.getBigIntegerHash());
-        System.out.println("Block Hash in HEX: " + block.getHexHash());
+        System.out.println("Block Hash as Big Integer: " + BlockHasher.getBigIntegerHash(block));
+        System.out.println("Block Hash in HEX: " + BlockHasher.getHexHash(block));
     }
 
 }

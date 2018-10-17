@@ -97,15 +97,4 @@ public class Block implements JSONNetworkObj, JSONHashObj {
         return blockObj;
     }
 
-    public byte[] getRawHash() throws Exception {
-        return Digest.sha256Hash(toJSONForHashing().toString().getBytes());
-    }
-
-    public BigInteger getBigIntegerHash() throws Exception {
-        return new BigInteger(1, getRawHash());
-    }
-
-    public String getHexHash() throws Exception {
-        return Hex.bytesToHex(getRawHash());
-    }
 }
