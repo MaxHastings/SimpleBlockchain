@@ -24,7 +24,7 @@ public class Chain { //TODO: Implement LevelDB to handle chain
     public Block getBlock(String blockHash) {
         for (int i = 0; i < blocks.size(); i++) {
             Block block = blocks.get(i);
-            if (block.getBlockHash().equals(blockHash)) {
+            if (block.getBlockHeader().getBlockHash().equals(blockHash)) {
                 return block;
             }
         }

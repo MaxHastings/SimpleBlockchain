@@ -21,11 +21,12 @@ public class MinerTest {
 
         miner.setDoStop(true);
 
+        miner.compareThreads();
+
         System.out.println("Smallest Block Hash as Big Integer: " + miner.getSmallestInt());
+        System.out.println("Total Hashes: " + miner.getHashCount().intValue());
 
-        block.setNonce(miner.getBestNonce());
-        System.out.println("Total Hashes: " + block.getNonce());
-
+        block.getBlockHeader().setNonce(miner.getBestNonce());
         System.out.println("Smallest Block Hash in HEX: " + BlockHasher.getHexHash(block));
 
     }

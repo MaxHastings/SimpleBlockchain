@@ -13,7 +13,12 @@ public class MerkleTree {
         this.transactions = transactions;
     }
 
-    public byte[] generateMerkleRootHash() throws Exception {
+    public MerkleTree(Transaction transaction){
+        transactions = new ArrayList<Transaction>();
+        transactions.add(transaction);
+    }
+
+    public MerkleRoot generateMerkleRootHash() throws Exception {
 
         ArrayList<Hash> hashChain = new ArrayList<Hash>();
 
@@ -26,7 +31,7 @@ public class MerkleTree {
             hashChain.add(new Hash(sha256Hash));
         }
 
-        return hashTheChain(hashChain);
+        return new MerkleRoot(hashTheChain(hashChain));
     }
 
     private byte[] hashTheChain(ArrayList<Hash> hashChain) throws Exception {
